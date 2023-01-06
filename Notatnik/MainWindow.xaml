@@ -5,8 +5,181 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Notatnik"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" >
-    <Grid>
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" Background="Transparent">
 
+    <Grid Background="#333">
+
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="30px"></RowDefinition>
+            <RowDefinition Height="18.821"></RowDefinition>
+            <RowDefinition Height="11.179"/>
+             
+
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="25.179"/>
+        </Grid.RowDefinitions>
+
+        <Grid MouseDown="StackPanel_MouseDown" Cursor="" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+                <ColumnDefinition Width="30px"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Rectangle Name="Background" Fill="Black" Grid.ColumnSpan="5"  Opacity="0.3">
+
+            </Rectangle>
+            <Image  Grid.Column="0" Width="20px" Source="https://cdn.discordapp.com/attachments/1061000567457058927/1061000581331832882/notepad-icon-png-18.png" ></Image>
+            <Label Content="Notatnik" Grid.Column="1" Foreground="White" FontWeight="Bold"></Label>
+            <Button Grid.Column="6" x:Name="btnClose"  BorderThickness="0" Content="X"  Foreground="White" FontSize="12" FontFamily="Sylfaen" Cursor="Hand" Click="btnClose_Click" Grid.ColumnSpan="2">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#DA34AE"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#C62DAE"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="18" Height="18" CornerRadius="9" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+
+            <Button Grid.Column="3" x:Name="btnMaximize"  BorderThickness="0"  Foreground="White" FontSize="12" FontFamily="Sylfaen" Cursor="Hand" Click="btnMaximize_Click">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" >
+                            <Setter.Value>
+                                <ImageBrush ImageSource="https://cdn.discordapp.com/attachments/1001803479372791828/1039633318901186620/maximize.png"></ImageBrush>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" >
+                                    <Setter.Value>
+                                        <ImageBrush ImageSource="https://cdn.discordapp.com/attachments/1001803479372791828/1039633318901186620/maximize.png"></ImageBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="18" Height="18" CornerRadius="9" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Button  Grid.Column="2" x:Name="btnMinimize"  BorderThickness="0" Content="-"  Foreground="White" FontSize="16" FontFamily="Sylfaen" Cursor="Hand" Click="btnMinimize_Click" Margin="0,0,10,0">
+
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter  Property="Background" Value="#28AEED"></Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#278BEF"></Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="18" Height="18" CornerRadius="9" Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+
+            </Button>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="65px"></ColumnDefinition>
+                <ColumnDefinition Width="65px"></ColumnDefinition>
+                <ColumnDefinition Width="65px"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+            <Rectangle  Fill="Black" Grid.ColumnSpan="5"  Opacity="0.3"/>
+
+
+            <Menu Background="Transparent" BorderThickness="0" VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="0" >
+                <MenuItem Header="Plik" VerticalAlignment="Center" VerticalContentAlignment="Center" Background="Transparent" BorderThickness="0" FontSize="14px" Foreground="White"  Width="63">
+
+                    <MenuItem Header="Nowa"  InputGestureText="CTRL + N"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Nowe Okno"  InputGestureText="CTRL + Shift + N"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Otwórz"  InputGestureText="CTRL + Shift + N"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Otwórz"  InputGestureText="CTRL + O"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Zapisz"  InputGestureText="CTRL + S"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Zapisz jako"  InputGestureText="CTRL + Shift + S"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <Separator Background="Black" Opacity="0.3"></Separator>
+                    <MenuItem Header="Ustawienia strony"   Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <MenuItem Header="Drukuj"  InputGestureText="CTRL + P"  Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+                    <Separator Background="Black" Opacity="0.3" BorderBrush="Transparent"></Separator>
+
+                    <MenuItem Header="Wyjdz" Click="MenuItem_Click"   Background="#FF1A1a1a" BorderBrush="Transparent" BorderThickness="0" FontSize="12"></MenuItem>
+
+                </MenuItem>
+            </Menu>
+            <Menu Background="Transparent" VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1">
+                <MenuItem Header="Edytuj" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14px" Foreground="White"  Width="60">
+
+                    <MenuItem Header="Zapisz" InputGestureText="CTRL + S"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Menu Background="Transparent" VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.Column="2" >
+                <MenuItem Header="Widok" VerticalAlignment="Center" VerticalContentAlignment="Center" FontSize="14px" Foreground="White"  Width="66">
+
+                    <MenuItem Header="Zapisz" InputGestureText="CTRL + S"></MenuItem>
+                </MenuItem>
+            </Menu>
+
+
+        </Grid>
+
+        <Border Padding="15" Grid.Row="3" >
+
+            
+            <TextBox Background="#333" BorderBrush="Transparent" FontFamily="Lucida Console" CaretBrush="White" BorderThickness="0" TextWrapping="Wrap" AcceptsReturn="True" Foreground="White" FontSize="13" Cursor=""/>
+
+
+
+        </Border>
+
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+                <ColumnDefinition Width="120"></ColumnDefinition>
+
+            </Grid.ColumnDefinitions>
+            <Rectangle Fill="Black" Opacity="0.3"></Rectangle>
+
+            <StackPanel Orientation="Horizontal" Margin="10,0" VerticalAlignment="Center" >
+                <TextBlock   Text="Ln:" Margin="0,0,10,0" Foreground="White"  ></TextBlock>
+                <TextBlock  x:Name="LineCount" Text="0" Margin="0,0,10,0" Foreground="White"  ></TextBlock>
+                <TextBlock   Text="Col:" Margin="0,0,10,0" Foreground="White"  ></TextBlock>
+
+                <TextBlock  x:Name="ColumnCout" Text="0" Foreground="White"></TextBlock>
+
+
+            </StackPanel>
+            
+        </Grid>
     </Grid>
 </Window>
