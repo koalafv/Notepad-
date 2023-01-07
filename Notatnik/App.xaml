@@ -4,5 +4,6 @@
              xmlns:local="clr-namespace:Notatnik"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+      
     </Application.Resources>
 </Application>
