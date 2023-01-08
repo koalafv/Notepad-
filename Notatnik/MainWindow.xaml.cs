@@ -27,6 +27,8 @@ namespace Notatnik
         public MainWindow()
         {
             InitializeComponent();
+            Przybliz_Click(Owner, new RoutedEventArgs());
+            Oddal_Click(Owner,new RoutedEventArgs());
         }
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
@@ -80,9 +82,14 @@ namespace Notatnik
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            OpenFIle();
+        }
+
+        public void OpenFIle()
+        {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.ShowDialog();
-            FileName= ofd.SafeFileName;
+            FileName = ofd.SafeFileName;
             path = ofd.FileName;
             title.Content = $"{FileName} - Notatnik";
             if (ofd.FileName != null)
@@ -188,47 +195,25 @@ namespace Notatnik
 
         private void Newwindow_Click(object sender, RoutedEventArgs e)
         {
+            NewWindowClick();
+        }
+        public void NewWindowClick()
+        {
             try
             {
                 Process.Start(Process.GetCurrentProcess().MainModule.FileName);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Nie moge tego zrobic" + ex.Message);
-               
+
             }
         }
 
         private void New_Click(object sender, RoutedEventArgs e)
         {
-            if (Textarea.Text != DocumentText)
-            {
-                if (MessageBox.Show("Nie masz zapisanego pliku. Chcesz zapisac?", "Zapisz", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
-                {
-                    Zapisz();
-                    Title = "Bez tytułu";
-                    path = "";
-                    DocumentText = "";
-                    Textarea.Text = "";
-                    
-                }
-                else
-                {
-                    Title = "Bez tytułu";
-                    path = "";
-                    DocumentText = "";
-                    Textarea.Text = "";
-
-                }
-            }
-            else
-            {
-                Title = "Bez tytułu";
-                path = "";
-                DocumentText = "";
-                Textarea.Text = "";
-            }
+            NewFile_click();
         }
 
         private void Ustawieniastrony_Click(object sender, RoutedEventArgs e)
@@ -278,14 +263,21 @@ namespace Notatnik
 
         private void godzina_Click(object sender, RoutedEventArgs e)
         {
+            godzinaidata();
+        }
+        public void godzinaidata()
+        {
             Textarea.Text = Textarea.Text.Insert(Textarea.CaretIndex, DateTime.Now.ToString());
         }
-        private double zoomScale = 1;
-        private double incremention = 0.1;
+  
         ScaleTransform scaleTransform = new ScaleTransform(1,1);
+        private int przyblizenie = 100;
         private void Przybliz_Click(object sender, RoutedEventArgs e)
         {
-           
+
+            przyblizenie += 10;
+            przyblizenietxt.Text = $"{przyblizenie}%";
+
             scaleTransform.ScaleX += 0.1;
             scaleTransform.ScaleY += 0.1;
             Textarea.RenderTransform = scaleTransform;
@@ -295,6 +287,10 @@ namespace Notatnik
         {
             scaleTransform.ScaleX -= 0.1;
             scaleTransform.ScaleY -= 0.1;
+
+            przyblizenie -= 10;
+            przyblizenietxt.Text = $"{przyblizenie}%";
+
             Textarea.RenderTransform = scaleTransform;
 
            
@@ -302,6 +298,8 @@ namespace Notatnik
 
         private void basicLupa_Click(object sender, RoutedEventArgs e)
         {
+            przyblizenie = 100;
+            przyblizenietxt.Text = $"{przyblizenie}%";
             scaleTransform.ScaleX =1;
             scaleTransform.ScaleY =1;
         }
@@ -312,6 +310,99 @@ namespace Notatnik
         {
             ColumnCout.Text = CurrentLine.ToString();
             LineCount.Text = CurrentColumn.ToString();
+        }
+
+   
+     
+
+        private void Textarea_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if(Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+
+                if (e.Delta > 0)
+                {
+                    scaleTransform.ScaleX += 0.1;
+                    scaleTransform.ScaleY += 0.1;
+                    przyblizenie += 10;
+                    przyblizenietxt.Text = $"{przyblizenie}%";
+                }
+                else
+                {
+                    scaleTransform.ScaleX -= 0.1;
+                    scaleTransform.ScaleY -= 0.1;
+                    przyblizenie -= 10;
+                    przyblizenietxt.Text = $"{przyblizenie}%";
+                }
+                e.Handled = true;
+            }
+        }
+
+        public void NewFile_click()
+        {
+            if (Textarea.Text != DocumentText)
+            {
+                if (MessageBox.Show("Nie masz zapisanego pliku. Chcesz zapisac?", "Zapisz", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    Zapisz();
+                    Title = "Bez tytułu";
+                    path = "";
+                    DocumentText = "";
+                    Textarea.Text = "";
+
+                }
+                else
+                {
+                    Title = "Bez tytułu";
+                    path = "";
+                    DocumentText = "";
+                    Textarea.Text = "";
+
+                }
+            }
+            else
+            {
+                Title = "Bez tytułu";
+                path = "";
+                DocumentText = "";
+                Textarea.Text = "";
+            }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.N &&  (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                NewFile_click();
+            }
+
+            if(e.Key == Key.N && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            {
+                NewWindowClick();
+            }
+            if(e.Key == Key.O && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                OpenFIle();
+            }
+            if(e.Key == Key.S && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                Zapisz();
+            }
+            if (e.Key == Key.S && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
+            {
+                SaveAs();
+            }
+            if (e.Key == Key.P && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+            {
+                PrintDialog pd = new PrintDialog();
+                
+                pd.ShowDialog();
+             
+            }
+            if(e.Key ==Key.F5)
+            {
+                godzinaidata();
+            }
         }
     }
 }
